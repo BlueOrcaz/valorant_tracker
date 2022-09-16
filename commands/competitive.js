@@ -1,11 +1,12 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { default: axios } = require('axios');
+const { valorantAPI } = require('vandal.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('competitive')
 		.setDescription('Returns your valorant Rank')
-	.addStringOption(option => 
+	/* .addStringOption(option => 
 		option
 			.setName('username')
 			.setDescription('Valorant Username')
@@ -22,9 +23,18 @@ module.exports = {
             .setName('region')
             .setDescription('region')
             .setRequired(true)
-        ),
+        ), */
+	,
 	async execute(interaction) {
-		const user = interaction.options.get('username').value;
+		const retrieveUser = await valorantAPI.fetchUser('BlueOrcaZ','007');
+		console.log('user');
+
+
+
+
+
+
+		/* const user = interaction.options.get('username').value;
 		const tag = interaction.options.get('tag').value;
         const region = interaction.options.get('region').value;
 
@@ -48,6 +58,6 @@ module.exports = {
 			})
 			.catch(function (error) {
 				console.log(error);
-			});
-	},
-};
+			}); */
+	}, 
+}
