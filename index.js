@@ -23,16 +23,27 @@ client.once('ready', () => {
 });
 
 client.on('interactionCreate', async interaction => {
-	if (!interaction.isChatInputCommand()) return;
-	const command = interaction.client.commands.get(interaction.commandName);
+	
+	if (!interaction.isCommand()) return;
 
-	if (!command) return;
+	const command = client.commands.get(interaction.commandName);
 
+
+
+	if (!command) return; // if a command is detected then it executes the command
 	try {
-		await command.execute(interaction);
+		await command.execute(interaction); // executes command
 	} catch (error) {
 		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		const { MessageEmbed } = require('discord.js');
+		const Embed = new MessageEmbed()
+		.setColor("RANDOM")
+		.setTitle("Error")
+		.setDescription("There was an Error exceuting this Command! Please make sure that your account details are set to public and/or you didn't mistype!")
+		.setTimestamp()
+		await interaction.reply({ embeds: [Embed] });
+
+		// await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true }); // logs an error 
 	}
 });
 
